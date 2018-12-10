@@ -18,7 +18,6 @@ import com.nissan.factory.factorymethod.JukeFactoryMethod;
 import com.nissan.factory.factorymethod.PulsarFactoryMethod;
 import com.nissan.factory.simplefactory.SimpleCarFactory;
 import com.nissan.factory.simplefactory.StaticCarFactory;
-import com.nissan.service.CarService;
 import com.vaadin.flow.component.HasElement;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Div;
@@ -38,14 +37,11 @@ public class MainView extends HorizontalLayout implements RouterLayout {
                 .appendChild(Objects.requireNonNull(content.getElement()));
     }
 
-    private final CarService carService;
-
     private final ApplicationContext applicationContext;
 
     @Autowired
-    public MainView(CarService carService, ApplicationContext applicationContext) {
+    public MainView(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
-        this.carService = carService;
         VerticalLayout verticalLayout = new VerticalLayout();
         verticalLayout.setWidth("500px");
         content = new Div();
@@ -67,6 +63,18 @@ public class MainView extends HorizontalLayout implements RouterLayout {
 
         verticalLayout.add(new Button(
                 "Use CarAbstractFactory(Creates 1 qashqai)",
+                event -> useCarAbstractFactory()));
+
+        verticalLayout.add(new Button(
+                "Test State Design Pattern",
+                event -> useCarAbstractFactory()));
+
+        verticalLayout.add(new Button(
+                "Observer Design Pattern",
+                event -> useCarAbstractFactory()));
+
+        verticalLayout.add(new Button(
+                "Composite Design Pattern",
                 event -> useCarAbstractFactory()));
     }
 
@@ -116,6 +124,7 @@ public class MainView extends HorizontalLayout implements RouterLayout {
         AbstractFactoryMethod jukeFactoryMethod = applicationContext
                 .getBean(JukeFactoryMethod.class);
         Car juke1 = jukeFactoryMethod.create();
+        //pulsar doors on juke ?? this is wrong
         juke1.setChassis(new PulsarChassis());
         ArrayList<Door> door2 = new ArrayList<>();
         door.add(new PulsarDoor());

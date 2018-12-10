@@ -28,6 +28,7 @@ public class CarView extends FlexLayout {
         carGrid.addColumn(Car::getBrand).setHeader("Brand");
         carGrid.addColumn(Car::getModel).setHeader("Model");
         carGrid.addColumn(Car::getColor).setHeader("Color");
+        carGrid.addColumn(Car::getPrice).setHeader("Price");
 
         DataProvider<Car, Void> carListDataProvider = DataProvider
                 .fromCallbacks(f -> carService.findAll(f.getOffset(),f.getLimit()), f -> (int) carService.findAll(

@@ -1,5 +1,6 @@
 package com.nissan.entity;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -20,6 +21,7 @@ public class Car extends AbstractEntity {
 
     private String color;
 
+    private BigDecimal price;
     // These kind of  HasA relationships are added to demonstrate abstract factory
     @Transient
     private Chassis chassis;
@@ -27,6 +29,7 @@ public class Car extends AbstractEntity {
     private List<Door> door = new ArrayList<>();
     @Transient
     private Engine engine;
+    private Random rand;
 
     public String getBrand() {
         return "Nissan";
@@ -38,7 +41,7 @@ public class Car extends AbstractEntity {
 
     public String getColor() {
         if (color != null) {
-            return  color;
+            return color;
         }
         color = getRandomColor();
         return color;
@@ -46,6 +49,18 @@ public class Car extends AbstractEntity {
 
     public void setColour(String colour) {
         this.color = colour;
+    }
+
+    public BigDecimal getPrice() {
+        if (price != null) {
+            return price;
+        }
+        price = getRandomPrize();
+        return price;
+    }
+
+    public void setPrice(BigDecimal prize) {
+        this.price = prize;
     }
 
     @Override
@@ -78,9 +93,19 @@ public class Car extends AbstractEntity {
     }
 
     private String getRandomColor() {
-        List<String> givenList = Arrays.asList("red", "green", "blue", "whit", "orange");
-        Random rand = new Random();
+        List<String> givenList = Arrays
+                .asList("red", "green", "blue", "white", "orange");
+        this.rand = new Random();
         return givenList.get(rand.nextInt(givenList.size()));
+    }
+
+    private BigDecimal getRandomPrize() {
+        BigDecimal leftLimit = new BigDecimal(30000);
+        BigDecimal rightLimit = new BigDecimal(55000);
+        float randomValue = rand.nextFloat();
+
+        return leftLimit.add(BigDecimal.valueOf(randomValue)
+                .multiply(rightLimit.subtract(leftLimit)));
     }
 
     // These kind of generic task are added to demonstrate factory method
